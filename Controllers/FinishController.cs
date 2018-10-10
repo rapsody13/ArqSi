@@ -1,0 +1,105 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using ClosetApi.Models;
+using ClosetApi.DTO;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClosetApi.Controllers
+{
+[Route("api/finish")]
+    [ApiController]
+    public class FinishController : ControllerBase
+    {
+        private readonly ClosetContext _context;
+
+        public FinishController(ClosetContext context)
+        {
+            _context = context;
+
+            if (_context.Finishes.Count() == 0)
+            {
+                // Create a new Product if collection is empty,
+                // which means you can't delete all Products.
+                _context.Finishes.Add(new Finish { Name = "Finish1" });
+                _context.SaveChanges();
+            }
+        }
+
+        //Create a new finish
+        [HttpPost]
+        public ActionResult Create(Finish finish){
+
+            if(!ModelState.IsValid){
+                return BadRequest();
+            }
+
+            var material = _context.Materials.Find(finish.MaterialId);
+
+            if(material == null){
+                return BadRequest();
+            }
+
+            Finish created = new Finish();
+            created.Name = finish.Name;
+            created.FinishId = _context.Finishes.Count()+1;
+            created.Description = finish.Description;
+            //created.Material = material;
+
+            _context.Finishes.Add(created);
+            _context.SaveChanges();
+
+           // return CreatedAtRoute("GetFinish", new { id = created.FinishId}, finish);
+           return Ok();
+            
+        }
+
+        //Update a finish by Id
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Finish finish)
+        {
+            var currentfinish = _context.Finishes.Find(id);
+            if (currentfinish == null)
+            {
+                return NotFound();
+            }
+
+            currentfinish.Name = finish.Name;
+            currentfinish.Description = finish.Description;
+
+            _context.Finishes.Update(currentfinish);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        //Delete finish by Id
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var finish = _context.Finishes.Find(id);
+            if (finish == null)
+            {
+                return NotFound();
+            }
+
+            _context.Finishes.Remove(finish);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpGet]
+        public ActionResult<List<Finish>> GetAll(){
+            return _context.Finishes.Include(x=> x.Material).ToList();
+        }
+
+        [HttpGet("{id}", Name = "GetFinish")]
+        public ActionResult<Finish> GetById(int id)
+        {
+            var finish = _context.Finishes.Find(id);
+            if(finish == null){
+                return NotFound();
+            }
+            return finish;
+        }
+    }
+}
