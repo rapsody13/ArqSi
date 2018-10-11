@@ -33,6 +33,10 @@ namespace ClosetApi.Controllers
                 return BadRequest("The product cannot have a subproduct when it's created");
             }
 
+            // if(product.ProductMeasurement == null){
+            //     return BadRequest("The product need measurements");
+            // }
+
             _context.Products.Add(product);
             _context.SaveChanges();
 

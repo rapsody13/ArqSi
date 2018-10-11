@@ -14,7 +14,7 @@ namespace ClosetApi.Controllers{
         {
             _context = context;
 
-            if (_context.Products.Count() == 0)
+            if (_context.Measurements.Count() == 0)
             {
                 // Create a new Product if collection is empty,
                 // which means you can't delete all Products.

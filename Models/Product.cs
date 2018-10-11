@@ -12,7 +12,7 @@ namespace ClosetApi.Models
         public ICollection<Category> Categories {get; set;}
         public ICollection<Product> Products {get; set;}
         public Product ParentProduct {get; set;}
-        public Measurement Measurement {get; set;}
+        public ICollection<Measurement> Measurements {get; set;}
 
         //public List<Product> Products {get; set;}
         // public List<Restriction> Restrictions {get; set;}
