@@ -30,27 +30,10 @@ namespace ClosetApi.Controllers
         [HttpPost]
         public ActionResult Create(Finish finish){
 
-            if(!ModelState.IsValid){
-                return BadRequest();
-            }
-
-            var material = _context.Materials.Find(finish.MaterialId);
-
-            if(material == null){
-                return BadRequest();
-            }
-
-            Finish created = new Finish();
-            created.Name = finish.Name;
-            created.FinishId = _context.Finishes.Count()+1;
-            created.Description = finish.Description;
-            //created.Material = material;
-
-            _context.Finishes.Add(created);
+            _context.Finishes.Add(finish);
             _context.SaveChanges();
 
-           // return CreatedAtRoute("GetFinish", new { id = created.FinishId}, finish);
-           return Ok();
+            return CreatedAtRoute("GetFinish", new { id = finish.FinishId}, finish);
             
         }
 
@@ -89,7 +72,7 @@ namespace ClosetApi.Controllers
 
         [HttpGet]
         public ActionResult<List<Finish>> GetAll(){
-            return _context.Finishes.Include(x=> x.Material).ToList();
+            return _context.Finishes.ToList();
         }
 
         [HttpGet("{id}", Name = "GetFinish")]

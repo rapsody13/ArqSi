@@ -11508,11 +11508,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jmcarvalho\\ClosetApi\\ClosetApi.csproj",
+      "projectUniqueName": "C:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
       "projectName": "ClosetApi",
-      "projectPath": "C:\\Users\\jmcarvalho\\ClosetApi\\ClosetApi.csproj",
+      "projectPath": "C:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
       "packagesPath": "C:\\Users\\jmcarvalho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jmcarvalho\\ClosetApi\\obj\\",
+      "outputPath": "C:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

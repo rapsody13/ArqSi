@@ -28,11 +28,35 @@ namespace ClosetApi.Controllers
         //Create a new product
         [HttpPost]
         public IActionResult Create(Product product){
+
+            if(product.Products != null){
+                return BadRequest("The product cannot have a subproduct when it's created");
+            }
+
             _context.Products.Add(product);
             _context.SaveChanges();
 
             return CreatedAtRoute("GetProduct", new { id = product.ProductId}, product);
         }
+
+        [HttpPost("addsubproduct/{id}")]
+        public IActionResult Create (Product product, int id)
+        {
+            
+            var currentproduct = _context.Products.Find(id);
+            if (currentproduct == null)
+            {
+               return NotFound();
+            }
+            product.ParentProduct = currentproduct;
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            return CreatedAtRoute("GetProduct", new { id = product.ProductId}, product);
+        }
+
+
         //Update a product by Id
         [HttpPut("{id}")]
         public IActionResult Update(int id, Product product)

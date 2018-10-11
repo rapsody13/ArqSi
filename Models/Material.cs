@@ -7,8 +7,8 @@ namespace ClosetApi.Models
         public int MaterialId {get; set;}
         public string Name {get; set;}
         public string Description {get; set;}
-        public virtual Product Product {get; set;}
-        public virtual ICollection<Finish> Finishes {get; set;}
+        //public Product Product {get; set;}
+        public ICollection<Finish> Finishes {get; set;}
         
     }
 }

@@ -8,8 +8,11 @@ namespace ClosetApi.Models
 
         public string Name {get; set;}
         public string Description {get; set;}
-        public virtual ICollection<Material> Materials {get; set;}
-        public virtual ICollection<Category> Categories {get; set;}
+        public ICollection<Material> Materials {get; set;}
+        public ICollection<Category> Categories {get; set;}
+        public ICollection<Product> Products {get; set;}
+        public Product ParentProduct {get; set;}
+
         //public List<Product> Products {get; set;}
         // public List<Restriction> Restrictions {get; set;}
     }

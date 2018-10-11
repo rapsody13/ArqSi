@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ClosetApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClosetApi.Controllers
 {
@@ -27,11 +28,18 @@ namespace ClosetApi.Controllers
         //Create a new material
         [HttpPost]
         public IActionResult Create(Material material){
+
+            // if(material.Finishes == null){
+            //     return BadRequest("The material must have, at least, one finish.");
+            // }
+
             _context.Materials.Add(material);
+            
             _context.SaveChanges();
 
             return CreatedAtRoute("GetMaterial", new { id = material.MaterialId}, material);
         }
+
         //Update a material by Id
         [HttpPut("{id}")]
         public IActionResult Update(int id, Material material)
@@ -67,7 +75,8 @@ namespace ClosetApi.Controllers
 
         [HttpGet]
         public ActionResult<List<Material>> GetAll(){
-            return _context.Materials.ToList();
+            
+            return _context.Materials.Include(x=>x.Finishes).ToList();
         }
 
         [HttpGet("{id}", Name = "GetMaterial")]
