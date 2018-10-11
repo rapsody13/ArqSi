@@ -13,6 +13,7 @@ namespace ClosetApi.Models
         public DbSet<Material> Materials {get; set;}
         public DbSet<Finish> Finishes {get; set;}
         public DbSet<Category> Categories {get; set;}
+        public DbSet<Measurement> Measurements {get; set;}
        
 
     }

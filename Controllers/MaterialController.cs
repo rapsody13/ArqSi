@@ -29,9 +29,9 @@ namespace ClosetApi.Controllers
         [HttpPost]
         public IActionResult Create(Material material){
 
-            // if(material.Finishes == null){
-            //     return BadRequest("The material must have, at least, one finish.");
-            // }
+            if(material.Finishes == null){
+                return BadRequest("The material must have, at least, one finish.");
+            }
 
             _context.Materials.Add(material);
             
@@ -39,6 +39,26 @@ namespace ClosetApi.Controllers
 
             return CreatedAtRoute("GetMaterial", new { id = material.MaterialId}, material);
         }
+
+        //Add finish to material
+
+        [HttpPost("addfinish/{id}")]
+        public IActionResult Create (Finish finish, int id)
+        {
+            
+            var parentMaterial = _context.Materials.Find(id);
+            if (parentMaterial == null)
+            {
+               return NotFound();
+            }
+            finish.ParentMaterial = parentMaterial;
+
+            _context.Finishes.Add(finish);
+            _context.SaveChanges();
+
+            return CreatedAtRoute("GetMaterial", new { id = finish.FinishId}, finish);
+        }
+
 
         //Update a material by Id
         [HttpPut("{id}")]
