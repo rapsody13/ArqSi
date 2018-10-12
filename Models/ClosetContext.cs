@@ -8,8 +8,7 @@ namespace ClosetApi.Models
             : base(options)
         {
         }
-
-
+        
         public DbSet<Product> Products { get; set; }
         public DbSet<Material> Materials {get; set;}
         public DbSet<Finish> Finishes {get; set;}
