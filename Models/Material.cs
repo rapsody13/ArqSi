@@ -9,6 +9,7 @@ namespace ClosetApi.Models
         public string Description {get; set;}
         //public Product Product {get; set;}
         public ICollection<Finish> Finishes {get; set;}
-        
+        public ICollection<ProductMaterial> ProductMaterials {get; set;}
+
     }
 }

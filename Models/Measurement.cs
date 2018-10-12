@@ -11,6 +11,6 @@ namespace ClosetApi.Models
         public bool WidthCont {get; set;}
         public double Depth {get; set;}
         public bool DepthCont {get; set;}
-        public ICollection<Product> Products {get; set;}
+        public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
     }
 }
