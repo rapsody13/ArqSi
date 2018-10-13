@@ -16,13 +16,11 @@ namespace ClosetApi.Controllers
         {
             _context = context;
 
-            if (_context.Materials.Count() == 0)
-            {
-                // Create a new Product if collection is empty,
-                // which means you can't delete all Products.
-                _context.Materials.Add(new Material { Name = "Material1" });
-                _context.SaveChanges();
-            }
+            // if (_context.Materials.Count() == 0)
+            // {
+            //     _context.Materials.Add(new Material { Name = "Material1" });
+            //     _context.SaveChanges();
+            // }
         }
 
         //Create a new material

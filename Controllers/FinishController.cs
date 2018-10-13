@@ -17,13 +17,11 @@ namespace ClosetApi.Controllers
         {
             _context = context;
 
-            if (_context.Finishes.Count() == 0)
-            {
-                // Create a new Product if collection is empty,
-                // which means you can't delete all Products.
-                _context.Finishes.Add(new Finish { Name = "Finish1" });
-                _context.SaveChanges();
-            }
+            // if (_context.Finishes.Count() == 0)
+            // {
+            //     _context.Finishes.Add(new Finish { Name = "Finish1" });
+            //     _context.SaveChanges();
+            // }
         }
 
         //Create a new finish

@@ -15,13 +15,13 @@ namespace ClosetApi.Controllers
         {
             _context = context;
 
-            if (_context.Categories.Count() == 0)
-            {
-                // Create a new Product if collection is empty,
-                // which means you can't delete all Products.
-                _context.Categories.Add(new Category { Name = "Category1"});
-                _context.SaveChanges();
-            }
+            // if (_context.Categories.Count() == 0)
+            // {
+            //     // Create a new Product if collection is empty,
+            //     // which means you can't delete all Products.
+            //     _context.Categories.Add(new Category { Name = "Category1"});
+            //     _context.SaveChanges();
+            // }
         }
 
         [HttpPost]
