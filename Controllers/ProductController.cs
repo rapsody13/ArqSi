@@ -16,12 +16,12 @@ namespace ClosetApi.Controllers
         {
             _context = context;
 
-            // if (_context.Products.Count() == 0)
-            // {
+            if (_context.Products.Count() == 0)
+            {
 
-            //     _context.Products.Add(new Product { Name = "Product1" });
-            //     _context.SaveChanges();
-            // }
+                _context.Products.Add(new Product { Name = "Product1" });
+                _context.SaveChanges();
+            }
         }
 
         //Create a new product
@@ -32,9 +32,9 @@ namespace ClosetApi.Controllers
                 return BadRequest("The product cannot have a subproduct when it's created");
             }
 
-            // if(product.ProductMeasurement == null){
-            //     return BadRequest("The product need measurements");
-            // }
+            if(product.ProductMeasurement == null){
+                return BadRequest("The product need measurements");
+            }
 
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -51,6 +51,55 @@ namespace ClosetApi.Controllers
             {
                return NotFound();
             }
+
+            if(product.ProductMeasurement == null){
+                return BadRequest("The sibling product must have a measurement");
+            }
+
+            if(product.Materials == null){
+                return BadRequest("The sibling product must have, at least, one material associated");
+            }
+
+            if(currentproduct.ProductMeasurement.DepthCont == false){
+                  if(product.ProductMeasurement.DepthMin > currentproduct.ProductMeasurement.DepthMin){
+                      return BadRequest("The sibling product Depth cannot be greater than the parent product.");
+                  }
+            }
+
+            if(currentproduct.ProductMeasurement.HeightCont == false){
+                if(product.ProductMeasurement.HeightMin > currentproduct.ProductMeasurement.HeightMin){
+                      return BadRequest("The sibling product Height cannot be greater than the parent product.");
+                  }
+            }
+
+            if(currentproduct.ProductMeasurement.WidthCont == false){
+                if(product.ProductMeasurement.WidthMin > currentproduct.ProductMeasurement.WidthMin){
+                      return BadRequest("The sibling product Width cannot be greater than the parent product.");
+                  }
+            }
+
+            //Check if parent product has a continuous measurement 
+            if(currentproduct.ProductMeasurement.DepthCont == true){
+                  if(product.ProductMeasurement.DepthMin > currentproduct.ProductMeasurement.DepthMin && 
+                  product.ProductMeasurement.DepthMax < currentproduct.ProductMeasurement.DepthMin){
+                      return BadRequest("The sibling product Depth cannot be greater than the parent product.");
+                  }
+            }
+
+            if(currentproduct.ProductMeasurement.HeightCont == true){
+                if(product.ProductMeasurement.HeightMin > currentproduct.ProductMeasurement.HeightMin && 
+                  product.ProductMeasurement.HeightMax < currentproduct.ProductMeasurement.HeightMax){
+                      return BadRequest("The sibling product Height cannot be greater than the parent product.");
+                  }
+            }
+
+            if(currentproduct.ProductMeasurement.WidthCont == true){
+                if(product.ProductMeasurement.WidthMin > currentproduct.ProductMeasurement.WidthMin  && 
+                  product.ProductMeasurement.WidthMax < currentproduct.ProductMeasurement.WidthMax){
+                      return BadRequest("The sibling product Width cannot be greater than the parent product.");
+                  }
+            }
+
             product.ParentProduct = currentproduct;
 
             _context.Products.Add(product);

@@ -14,6 +14,7 @@ namespace ClosetApi.Models
         public DbSet<Finish> Finishes {get; set;}
         public DbSet<Category> Categories {get; set;}
         public DbSet<Measurement> Measurements {get; set;}
+    
        
        protected override void OnModelCreating(ModelBuilder modelBuilder){
            modelBuilder.Entity<ProductMeasurement>()
