@@ -119,6 +119,38 @@ namespace ClosetApi.Controllers
             }
             return product;
         }
+
+        [HttpGet("getsubproducts/{id}")]
+        public ActionResult<List<Product>> GetSubProducts(int id)
+        {
+            Product product = _context.Products.Where(x=>x.ProductId.Equals(id)).FirstOrDefault();
+            
+            if(product == null){
+                return NotFound();
+            }
+
+            if(product.Products == null){
+                return NotFound();
+            }
+            return product.Products.ToList();
+        }
+
+        [HttpGet("getparentproducts/{id}")]
+        public ActionResult<List<Product>> GetParentProducts(int id)
+        {
+            Product product = _context.Products.Where(x=>x.ProductId.Equals(id)).FirstOrDefault();
+            
+            if(product == null){
+                return NotFound();
+            }
+
+            List<Product> subproductlist = _context.Products.Where(p=>p.ParentProduct.Equals(product)).ToList();
+
+            if(subproductlist == null){
+                return NotFound();
+            }
+            return subproductlist;
+        }
         
     }
 }
