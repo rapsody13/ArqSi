@@ -17,18 +17,18 @@ namespace ClosetApi.Models
     
        
        protected override void OnModelCreating(ModelBuilder modelBuilder){
-           modelBuilder.Entity<ProductMeasurement>()
-           .HasKey(pm => new {pm.ProductId, pm.MeasurementId});
+        //    modelBuilder.Entity<ProductMeasurement>()
+        //    .HasKey(pm => new {pm.ProductId, pm.MeasurementId});
 
-           modelBuilder.Entity<ProductMeasurement>()
-           .HasOne(pm => pm.Product)
-           .WithMany(p => p.ProductMeasurements)
-           .HasForeignKey(pm => pm.ProductId);
+        //    modelBuilder.Entity<ProductMeasurement>()
+        //    .HasOne(pm => pm.Product)
+        //    .WithMany(p => p.ProductMeasurements)
+        //    .HasForeignKey(pm => pm.ProductId);
 
-            modelBuilder.Entity<ProductMeasurement>()
-           .HasOne(pm => pm.Measurement)
-           .WithMany(m => m.ProductMeasurements)
-           .HasForeignKey(pm => pm.MeasurementId);
+        //     modelBuilder.Entity<ProductMeasurement>()
+        //    .HasOne(pm => pm.Measurement)
+        //    .WithMany(m => m.ProductMeasurements)
+        //    .HasForeignKey(pm => pm.MeasurementId);
 
            modelBuilder.Entity<ProductMaterial>()
            .HasKey(prma => new {prma.ProductId, prma.MaterialId});

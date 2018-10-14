@@ -12,8 +12,8 @@ namespace ClosetApi.Models
         public Category Category {get; set;}
         public ICollection<Product> Products {get; set;}
         public Product ParentProduct {get; set;}
-        public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
-        public Measurement ProductMeasurement {get; set;}
+        // public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
+        public Measurement Measurement {get; set;}
         public ICollection<ProductMaterial> ProductMaterials {get; set;}
 
     }
