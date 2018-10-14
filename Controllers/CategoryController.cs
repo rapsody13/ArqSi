@@ -53,6 +53,20 @@ namespace ClosetApi.Controllers
             return CreatedAtRoute("GetCategory", new { id = category.CategoryId}, category);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
         //Update a category by Id
         [HttpPut("{id}")]
         public IActionResult Update(int id, Category category)
