@@ -14,12 +14,12 @@ namespace ClosetApi.Controllers{
         {
             _context = context;
 
-            // if (_context.Measurements.Count() == 0)
-            // {
+            if (_context.Measurements.Count() == 0)
+            {
 
-            //     _context.Measurements.Add(new Measurement { HeightMin = 1.0});
-            //     _context.SaveChanges();
-            // }
+                _context.Measurements.Add(new Measurement { HeightMin = 1.0});
+                _context.SaveChanges();
+            }
         }
 
         [HttpPost]
