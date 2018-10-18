@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClosetApi.Models
 {
@@ -7,6 +8,8 @@ namespace ClosetApi.Models
         public int MaterialId {get; set;}
         public string Name {get; set;}
         public string Description {get; set;}
+        [NotMapped]
+        public int[] FinishesId {get; set;}
         //public Product Product {get; set;}
         public ICollection<Finish> Finishes {get; set;}
         public ICollection<ProductMaterial> ProductMaterials {get; set;}

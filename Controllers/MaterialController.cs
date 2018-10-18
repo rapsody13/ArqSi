@@ -27,9 +27,31 @@ namespace ClosetApi.Controllers
         [HttpPost]
         public IActionResult Create(Material material){
 
-            if(material.Finishes == null){
-                return BadRequest("The material must have, at least, one finish.");
+            //Check if the material has a finish
+            if(material.FinishesId == null){
+                return BadRequest("The material must have a finish when is created");
             }
+
+            if(material.Finishes != null){
+                return BadRequest();
+            }
+
+            Finish finish;
+            foreach(int i in material.FinishesId){
+                finish = _context.Finishes.Find(i);
+                if(finish == null){
+                    return NotFound("The finish with Id: " + i + " does not exist");
+                }
+                if(finish.ParentMaterialId != 0){
+                    return BadRequest("This finish already belongs to a material");
+                }
+                finish.ParentMaterialId = i;
+                _context.Finishes.Update(finish);
+                _context.SaveChanges();
+                //finish.ParentMaterial = material;
+            }
+            
+            
 
             _context.Materials.Add(material);
             
@@ -37,26 +59,6 @@ namespace ClosetApi.Controllers
 
             return CreatedAtRoute("GetMaterial", new { id = material.MaterialId}, material);
         }
-
-        //Add finish to material
-
-        [HttpPost("addfinish/{id}")]
-        public IActionResult Create (Finish finish, int id)
-        {
-            
-            var parentMaterial = _context.Materials.Find(id);
-            if (parentMaterial == null)
-            {
-               return NotFound();
-            }
-            finish.ParentMaterial = parentMaterial;
-
-            _context.Finishes.Add(finish);
-            _context.SaveChanges();
-
-            return CreatedAtRoute("GetMaterial", new { id = finish.FinishId}, finish);
-        }
-
 
         //Update a material by Id
         [HttpPut("{id}")]

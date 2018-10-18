@@ -28,12 +28,52 @@ namespace ClosetApi.Controllers
         [HttpPost]
         public IActionResult Create(Product product){
 
-            if(product.Products != null){
-                return BadRequest("The product cannot have a subproduct when it's created");
+            //Check if the product has a material
+            if(product.MaterialsId == null){
+                return BadRequest("The product needs, at least, one material");
             }
 
-            if(product.Measurements == null){
-                return BadRequest("The product needs measurements");
+            //Check if the product is part of a category
+            if(product.CategoryId == 0){
+                return BadRequest("The product must be part of a category");
+            }
+
+            //Check if the product does not have a subproduct when created
+            if(product.ParentProductId != 0){
+                return BadRequest("The product must not have a subproduct when it is created");
+            }
+
+            //Check if the product has a measurement when created
+            if(product.MeasurementsId == null){
+                return BadRequest ("The product must have, at least, one measurement");
+            }
+
+            //Check if the materials exists
+            foreach(int i in product.MaterialsId){
+                if(_context.Materials.Find(i) == null){
+                    return BadRequest("The material with Id " + i + " does not exist");
+                }
+                else{
+                    product.Materials.Add(_context.Materials.Find(i));
+                }
+            }
+
+            //Check if the category exists
+                if(_context.Categories.Find(product.CategoryId) == null){
+                    return BadRequest("The category with Id " + product.CategoryId + " does not exist");
+                }
+                else{
+                    product.Category = _context.Categories.Find(product.CategoryId);
+                }
+            
+            //Check if the measurements exists
+            foreach(int i in product.MeasurementsId){
+                if(_context.Measurements.Find(i) == null){
+                    return BadRequest("The measurement with Id " + i + " does not exist");
+                }
+                else{
+                    product.Measurements.Add(_context.Measurements.Find(i));
+                }
             }
 
             _context.Products.Add(product);
@@ -46,61 +86,62 @@ namespace ClosetApi.Controllers
         public IActionResult Create (Product product, int id)
         {
             
-            var currentproduct = _context.Products.Find(id);
-            if (currentproduct == null)
+            var parentproduct = _context.Products.Find(id);
+            if (parentproduct == null)
             {
                return NotFound();
             }
 
-            if(product.Measurements == null){
-                return BadRequest("The sibling product must have a measurement");
+            if(product.ParentProductId != 0){
+                return BadRequest("The parent was already specified");
             }
 
-            if(product.Materials == null){
-                return BadRequest("The sibling product must have, at least, one material associated");
+            //Check if the subproduct has a material
+            if(product.MaterialsId == null){
+                return BadRequest("The product needs, at least, one material");
             }
 
-            // if(currentproduct.Measurement.DepthCont == false){
-            //       if(product.Measurement.DepthMin > currentproduct.Measurement.DepthMin){
-            //           return BadRequest("The sibling product Depth cannot be greater than the parent product.");
-            //       }
-            // }
+            //Check if the subproduct is part of a category
+            if(product.CategoryId == 0){
+                return BadRequest("The product must be part of a category");
+            }
 
-            // if(currentproduct.Measurement.HeightCont == false){
-            //     if(product.Measurement.HeightMin > currentproduct.Measurement.HeightMin){
-            //           return BadRequest("The sibling product Height cannot be greater than the parent product.");
-            //       }
-            // }
+            //Check if the product has a measurement when created
+            if(product.MeasurementsId == null){
+                return BadRequest ("The product must have, at least, one measurement");
+            }
 
-            // if(currentproduct.Measurement.WidthCont == false){
-            //     if(product.Measurement.WidthMin > currentproduct.Measurement.WidthMin){
-            //           return BadRequest("The sibling product Width cannot be greater than the parent product.");
-            //       }
-            // }
+            //Check if the materials exists
+            foreach(int i in product.MaterialsId){
+                if(_context.Materials.Find(i) == null){
+                    return BadRequest("The material with Id " + i + " does not exist");
+                }
+                else{
+                    product.Materials.Add(_context.Materials.Find(i));
+                }
+            }
 
-            // //Check if parent product has a continuous measurement 
-            // if(currentproduct.Measurement.DepthCont == true){
-            //       if(product.Measurement.DepthMin > currentproduct.Measurement.DepthMin && 
-            //       product.Measurement.DepthMax < currentproduct.Measurement.DepthMin){
-            //           return BadRequest("The sibling product Depth cannot be greater than the parent product.");
-            //       }
-            // }
+            //Check if the category exists
+                if(_context.Categories.Find(product.CategoryId) == null){
+                    return BadRequest("The category with Id " + product.CategoryId + " does not exist");
+                }
+                else{
+                    product.Category = _context.Categories.Find(product.CategoryId);
+                }
+            
+            //Check if the measurements exists
+            foreach(int i in product.MeasurementsId){
+                if(_context.Measurements.Find(i) == null){
+                    return BadRequest("The measurement with Id " + i + " does not exist");
+                }
+                else{
+                    //Tratar aqui as medidas
+                    product.Measurements.Add(_context.Measurements.Find(i));
+                }
+            }
 
-            // if(currentproduct.Measurement.HeightCont == true){
-            //     if(product.Measurement.HeightMin > currentproduct.Measurement.HeightMin && 
-            //       product.Measurement.HeightMax < currentproduct.Measurement.HeightMax){
-            //           return BadRequest("The sibling product Height cannot be greater than the parent product.");
-            //       }
-            // }
-
-            // if(currentproduct.Measurement.WidthCont == true){
-            //     if(product.Measurement.WidthMin > currentproduct.Measurement.WidthMin  && 
-            //       product.Measurement.WidthMax < currentproduct.Measurement.WidthMax){
-            //           return BadRequest("The sibling product Width cannot be greater than the parent product.");
-            //       }
-            // }
-
-            product.ParentProduct = currentproduct;
+            product.ParentProductId = id;
+            product.ParentProduct = parentproduct;
 
             _context.Products.Add(product);
             _context.SaveChanges();

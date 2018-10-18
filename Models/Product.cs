@@ -7,6 +7,16 @@ namespace ClosetApi.Models
         public int ProductId {get; set;}
         public string Name {get; set;}
         public string Description {get; set;}
+        [NotMapped]
+        public int[] MaterialsId {get; set;}
+        [NotMapped]
+        public int CategoryId {get;set;}
+        [NotMapped]
+        public int ParentProductId {get; set;}
+        [NotMapped]
+        public int[] MeasurementsId {get; set;}
+
+        //Foreign Keys
         public ICollection<Material> Materials {get; set;}
         public Category Category {get; set;}
         public ICollection<Product> Products {get; set;}

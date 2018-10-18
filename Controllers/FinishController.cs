@@ -27,12 +27,20 @@ namespace ClosetApi.Controllers
         //Create a new finish
         [HttpPost]
         public ActionResult Create(Finish finish){
+            
+            //Check if the finish has a material associated
+            if(finish.ParentMaterialId != 0){
+                return BadRequest("The finish must not belong to a material when it's created");
+            }
+
+            if(finish.ParentMaterial != null){
+                return BadRequest("The finish cannot be associated to a material");
+            }
 
             _context.Finishes.Add(finish);
             _context.SaveChanges();
 
             return CreatedAtRoute("GetFinish", new { id = finish.FinishId}, finish);
-            
         }
 
         //Update a finish by Id
