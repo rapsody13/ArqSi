@@ -14,23 +14,28 @@ namespace ClosetApi.Controllers{
         {
             _context = context;
 
-            if (_context.Measurements.Count() == 0)
-            {
+            // if (_context.Measurements.Count() == 0)
+            // {
 
-                _context.Measurements.Add(new Measurement { HeightMin = 1.0});
-                _context.SaveChanges();
-            }
+            //     _context.Measurements.Add(new Measurement { HeightMin = 1.0});
+            //     _context.SaveChanges();
+            // }
         }
 
         [HttpPost]
         public IActionResult Create(Measurement measurement){
-
+            
+            //Reference only for testing
             if(measurement.HeightCont != false || measurement.WidthCont != false || measurement.DepthCont != false){
                 return BadRequest("Height, Width and Depth cannot have a value when created");
             }
 
-            if(measurement.DepthMin >= 0 && measurement.DepthMax >= 0){
-                if(measurement.DepthMin == 0 && measurement.DepthMax >0){
+            if(measurement.DepthMax >0 && measurement.DepthMin == 0){
+                return BadRequest("The DepthMin value cannot be 0 when there's a value for DepthMax");
+            }
+
+            if(measurement.DepthMin > 0 && measurement.DepthMax > 0){
+                if(measurement.DepthMin == 0 && measurement.DepthMax > 0){
                     return BadRequest("Depth Minimum value cannot be 0");
                 }
 
@@ -40,19 +45,26 @@ namespace ClosetApi.Controllers{
 
                 measurement.DepthCont = true;
             }
-
-             if(measurement.WidthMin >= 0 && measurement.WidthMax >= 0){
+            
+             if(measurement.WidthMax >0 && measurement.WidthMin == 0){
+                return BadRequest("The WidthMin value cannot be 0 when there's a value for WidthMax");
+            }
+             if(measurement.WidthMin > 0 && measurement.WidthMax > 0){
                 if(measurement.WidthMin == 0 && measurement.WidthMax >0){
-                    return BadRequest("Widht Minimum value cannot be 0");
+                    return BadRequest("Width Minimum value cannot be 0");
                 }
                 if(measurement.WidthMin > measurement.WidthMax){
-                    return BadRequest("Widht Minimum value cannot be greater than max value");
+                    return BadRequest("Width Minimum value cannot be greater than max value");
                 }
 
                 measurement.WidthCont = true;
             }
 
-              if(measurement.HeightMin >= 0 && measurement.HeightMax >= 0){
+             if(measurement.HeightMax >0 && measurement.HeightMin == 0){
+                return BadRequest("The HeightMin value cannot be 0 when there's a value for HeightMax");
+            }
+
+              if(measurement.HeightMin > 0 && measurement.HeightMax > 0){
                 if(measurement.HeightMin == 0 && measurement.HeightMax > 0){
                     return BadRequest("Height Minimum value cannot be 0");
                 }
