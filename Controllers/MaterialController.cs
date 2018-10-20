@@ -29,7 +29,7 @@ namespace ClosetApi.Controllers
 
             //Check if the material has a finish
             if(material.FinishesId == null){
-                return BadRequest("The material must have a finish when is created");
+                return BadRequest("The material must have, at least, one finish when is created");
             }
 
             if(material.Finishes != null){
@@ -45,17 +45,19 @@ namespace ClosetApi.Controllers
                 if(finish.ParentMaterialId != 0){
                     return BadRequest("This finish already belongs to a material");
                 }
-                finish.ParentMaterialId = i;
-                _context.Finishes.Update(finish);
-                _context.SaveChanges();
-                //finish.ParentMaterial = material;
             }
-            
-            
 
             _context.Materials.Add(material);
             
             _context.SaveChanges();
+
+            foreach(int i in material.FinishesId){
+                finish = _context.Finishes.Find(i);
+                finish.ParentMaterialId = material.MaterialId;
+                _context.Finishes.Update(finish);
+                _context.SaveChanges();
+            }
+
 
             return CreatedAtRoute("GetMaterial", new { id = material.MaterialId}, material);
         }
