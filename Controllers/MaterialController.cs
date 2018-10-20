@@ -51,12 +51,12 @@ namespace ClosetApi.Controllers
             
             _context.SaveChanges();
 
-            foreach(int i in material.FinishesId){
-                finish = _context.Finishes.Find(i);
-                finish.ParentMaterialId = material.MaterialId;
-                _context.Finishes.Update(finish);
-                _context.SaveChanges();
-            }
+            // foreach(int i in material.FinishesId){
+            //     finish = _context.Finishes.Find(i);
+            //     finish.ParentMaterialId = material.MaterialId;
+            //     _context.Finishes.Update(finish);
+            //     _context.SaveChanges();
+            // }
 
 
             return CreatedAtRoute("GetMaterial", new { id = material.MaterialId}, material);

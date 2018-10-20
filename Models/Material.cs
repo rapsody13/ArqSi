@@ -9,7 +9,7 @@ namespace ClosetApi.Models
         public string Name {get; set;}
         public string Description {get; set;}
         [NotMapped]
-        public int[] FinishesId {get; set;}
+        public List<int> FinishesId {get; set;}
         //public Product Product {get; set;}
         public ICollection<Finish> Finishes {get; set;}
         public ICollection<ProductMaterial> ProductMaterials {get; set;}

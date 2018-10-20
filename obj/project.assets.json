@@ -5171,7 +5171,7 @@
       ]
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
-      "sha512": "ab4+TZw3Sxqrr5TwrwVyABeQkhSxYMJXgG6yZw7T+r6Vz+hcOt+pK79o15ESG7kZvWAK9wRG7emnTIia5O6R1Q==",
+      "sha512": "sa/cztXesLyTgCiYuef0RK2EAImnak0w2wrjCh/YBTvbn4iV2eTy0q3F8CyUkGiaYEyxUKGVTko6+7SMRBL4Gg==",
       "type": "package",
       "path": "microsoft.aspnetcore.razor.design/2.1.2",
       "files": [
@@ -11502,23 +11502,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jmcarvalho\\.nuget\\packages\\": {},
+    "C:\\Users\\Jorge Carvalho\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
+      "projectUniqueName": "c:\\Users\\Jorge Carvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
       "projectName": "ClosetApi",
-      "projectPath": "c:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
-      "packagesPath": "C:\\Users\\jmcarvalho\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\jmcarvalho\\Documents\\GitHub\\ArqSi\\obj\\",
+      "projectPath": "c:\\Users\\Jorge Carvalho\\Documents\\GitHub\\ArqSi\\ClosetApi.csproj",
+      "packagesPath": "C:\\Users\\Jorge Carvalho\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\Jorge Carvalho\\Documents\\GitHub\\ArqSi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jmcarvalho\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jorge Carvalho\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
