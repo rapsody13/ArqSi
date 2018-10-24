@@ -14,7 +14,7 @@ namespace ClosetApi.Models
         [NotMapped]
         public int ParentProductId {get; set;}
         [NotMapped]
-        public int MeasurementsId {get; set;}
+        public List<int> MeasurementsId {get; set;}
 
         //Foreign Keys
         public ICollection<Material> Materials {get; set;}

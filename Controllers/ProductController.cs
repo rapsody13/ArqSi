@@ -43,12 +43,12 @@ namespace ClosetApi.Controllers
                 return BadRequest("The product must not have a subproduct when it is created");
             }
 
-            //Check if the product has a measurement when created
-            if(product.MeasurementsId == 0){
+            //Check if the product has measurements when created
+            if(product.MeasurementsId == null){
                 return BadRequest ("The product must have a measurement");
             }
 
-            // //Check if the materials exists
+            //Check if the materials exists
             foreach(int i in product.MaterialsId){
                 if(_context.Materials.Find(i) == null){
                     return BadRequest("The material with Id " + i + " does not exist");
@@ -67,8 +67,10 @@ namespace ClosetApi.Controllers
                 // }
             
             //Check if the measurements exists
-                if(_context.Categories.Find(product.MeasurementsId) == null){
-                    return BadRequest("The measurement with Id " + product.MeasurementsId + "does not exist"); 
+                foreach(int i in product.MeasurementsId){
+                    if(_context.Measurements.Find(i) == null){
+                        return BadRequest("The measurement with Id " + i + " does not exist");
+                    }
                 }
 
             _context.Products.Add(product);
@@ -102,7 +104,7 @@ namespace ClosetApi.Controllers
             }
 
             //Check if the product has a measurement when created
-            if(product.MeasurementsId == 0){
+            if(product.MeasurementsId == null){
                 return BadRequest ("The product must have one measurement");
             }
 
@@ -117,111 +119,126 @@ namespace ClosetApi.Controllers
             }
 
             //Check if the category exists
-                if(_context.Categories.Find(product.CategoryId) == null){
-                    return BadRequest("The category with Id " + product.CategoryId + " does not exist");
-                }
-                else{
-                    product.Category = _context.Categories.Find(product.CategoryId);
-                }
+            if(_context.Categories.Find(product.CategoryId) == null){
+                return BadRequest("The category with Id " + product.CategoryId + " does not exist");
+            }
+            else{
+                product.Category = _context.Categories.Find(product.CategoryId);
+            }
             
-            //Check if the measurements exists and fits
-                if(_context.Measurements.Find(product.MeasurementsId) == null){
-                        return BadRequest("The measurement with Id " + product.MeasurementsId + " does not exist");
-                    }
-                else{
-                    Measurement productmeasurement = _context.Measurements.Find(product.MeasurementsId);
-                    Measurement parentmeasurement = _context.Measurements.Find(parentproduct.MeasurementsId);
+            //Check if, at least, one measurement fits the parent product
+            foreach(int i in product.MeasurementsId){
+                if(_context.Materials.Find(i) == null){
+                    return BadRequest("The measurement with Id " + i + " does not exist.");
+                }
+            }
+
+            Measurement parentmeasurement;
+            Measurement productmeasurement;
+            bool fit = false;
+
+            foreach(int a in parentproduct.MeasurementsId){
+                parentmeasurement = _context.Measurements.Find(a);
+
+                foreach(int b in product.MeasurementsId){
+                    productmeasurement = _context.Measurements.Find(b);
                     
-                    //Both Height Continuous
+                    //Both Height are Continuous
                     if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == true){
                         if(productmeasurement.HeightMin >= parentmeasurement.HeightMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.HeightMax >= parentmeasurement.HeightMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
-
                     }
+
                     //Parent Height Continuous
                     if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == false){
                         if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.HeightMin > parentmeasurement.HeightMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
-                    
+
                     //Not continuous Height
                     if(parentmeasurement.HeightCont == false && productmeasurement.HeightCont == false){
                         if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.HeightMin > parentmeasurement.HeightMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
 
                     //Both Width Continuous
                     if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == true){
                         if(productmeasurement.WidthMin >= parentmeasurement.WidthMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.WidthMax >= parentmeasurement.WidthMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
-
                     }
+
                     //Parent Width Continuous
                     if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == false){
                         if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.WidthMin > parentmeasurement.WidthMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
-                    
+                
                     //Not continuous Width
                     if(parentmeasurement.WidthCont == false && productmeasurement.WidthCont == false){
                         if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.WidthMin > parentmeasurement.WidthMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
 
                     //Both Depth Continuous
                     if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == true){
                         if(productmeasurement.DepthMin >= parentmeasurement.DepthMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.DepthMax >= parentmeasurement.DepthMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
-
                     }
+
                     //Parent Depth Continuous
                     if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == false){
                         if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.DepthMin > parentmeasurement.DepthMax){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
-                    
+                
                     //Not continuous Depth
                     if(parentmeasurement.DepthCont == false && productmeasurement.DepthCont == false){
                         if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                         if(productmeasurement.DepthMin > parentmeasurement.DepthMin){
-                            return BadRequest("The product does not fit the parent product");
+                            continue;
                         }
                     }
+                    fit = true;
                 }
+            }
+
+            if(fit == false){
+                return BadRequest("Not a single subproduct fits product");
+            }
 
             product.ParentProductId = id;
             product.ParentProduct = parentproduct;
