@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClosetApi.Models
 {
@@ -15,6 +16,8 @@ namespace ClosetApi.Models
         public double DepthMin {get; set;}
         public double DepthMax {get; set;}
         public bool DepthCont {get; set;}
-        public ICollection<Product> Products {get; set;}
+        [NotMapped]
+        public List<int> ProductsId {get; set;}
+        public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
     }
 }

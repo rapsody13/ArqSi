@@ -89,156 +89,156 @@ namespace ClosetApi.Controllers
                return NotFound();
             }
 
-            if(product.ParentProductId != 0){
-                return BadRequest("The parent was already specified");
-            }
+            // if(product.ParentProductId != 0){
+            //     return BadRequest("The parent was already specified");
+            // }
 
-            //Check if the subproduct has a material
-            if(product.MaterialsId == null){
-                return BadRequest("The product needs, at least, one material");
-            }
+            // //Check if the subproduct has a material
+            // if(product.MaterialsId == null){
+            //     return BadRequest("The product needs, at least, one material");
+            // }
 
-            //Check if the subproduct is part of a category
-            if(product.CategoryId == 0){
-                return BadRequest("The product must be part of a category");
-            }
+            // //Check if the subproduct is part of a category
+            // if(product.CategoryId == 0){
+            //     return BadRequest("The product must be part of a category");
+            // }
 
-            //Check if the product has a measurement when created
-            if(product.MeasurementsId == null){
-                return BadRequest ("The product must have one measurement");
-            }
+            // //Check if the product has a measurement when created
+            // if(product.MeasurementsId == null){
+            //     return BadRequest ("The product must have one measurement");
+            // }
 
-            //Check if the materials exists
-            foreach(int i in product.MaterialsId){
-                if(_context.Materials.Find(i) == null){
-                    return BadRequest("The material with Id " + i + " does not exist");
-                }
-                else{
-                    product.Materials.Add(_context.Materials.Find(i));
-                }
-            }
+            // //Check if the materials exists
+            // foreach(int i in product.MaterialsId){
+            //     if(_context.Materials.Find(i) == null){
+            //         return BadRequest("The material with Id " + i + " does not exist");
+            //     }
+            //     else{
+            //         product.Materials.Add(_context.Materials.Find(i));
+            //     }
+            // }
 
-            //Check if the category exists
-            if(_context.Categories.Find(product.CategoryId) == null){
-                return BadRequest("The category with Id " + product.CategoryId + " does not exist");
-            }
-            else{
-                product.Category = _context.Categories.Find(product.CategoryId);
-            }
+            // //Check if the category exists
+            // if(_context.Categories.Find(product.CategoryId) == null){
+            //     return BadRequest("The category with Id " + product.CategoryId + " does not exist");
+            // }
+            // else{
+            //     product.Category = _context.Categories.Find(product.CategoryId);
+            // }
             
-            //Check if, at least, one measurement fits the parent product
-            foreach(int i in product.MeasurementsId){
-                if(_context.Materials.Find(i) == null){
-                    return BadRequest("The measurement with Id " + i + " does not exist.");
-                }
-            }
+            // //Check if, at least, one measurement fits the parent product
+            // foreach(int i in product.MeasurementsId){
+            //     if(_context.Materials.Find(i) == null){
+            //         return BadRequest("The measurement with Id " + i + " does not exist.");
+            //     }
+            // }
 
-            Measurement parentmeasurement;
-            Measurement productmeasurement;
-            bool fit = false;
+            // Measurement parentmeasurement;
+            // Measurement productmeasurement;
+            // bool fit = false;
 
-            foreach(int a in parentproduct.MeasurementsId){
-                parentmeasurement = _context.Measurements.Find(a);
+            // foreach(int a in parentproduct.MeasurementsId){
+            //     parentmeasurement = _context.Measurements.Find(a);
 
-                foreach(int b in product.MeasurementsId){
-                    productmeasurement = _context.Measurements.Find(b);
+            //     foreach(int b in product.MeasurementsId){
+            //         productmeasurement = _context.Measurements.Find(b);
                     
-                    //Both Height are Continuous
-                    if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == true){
-                        if(productmeasurement.HeightMin >= parentmeasurement.HeightMin){
-                            continue;
-                        }
-                        if(productmeasurement.HeightMax >= parentmeasurement.HeightMax){
-                            continue;
-                        }
-                    }
+            //         //Both Height are Continuous
+            //         if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == true){
+            //             if(productmeasurement.HeightMin >= parentmeasurement.HeightMin){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.HeightMax >= parentmeasurement.HeightMax){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Parent Height Continuous
-                    if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == false){
-                        if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
-                            continue;
-                        }
-                        if(productmeasurement.HeightMin > parentmeasurement.HeightMax){
-                            continue;
-                        }
-                    }
+            //         //Parent Height Continuous
+            //         if(parentmeasurement.HeightCont == true && productmeasurement.HeightCont == false){
+            //             if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.HeightMin > parentmeasurement.HeightMax){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Not continuous Height
-                    if(parentmeasurement.HeightCont == false && productmeasurement.HeightCont == false){
-                        if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
-                            continue;
-                        }
-                        if(productmeasurement.HeightMin > parentmeasurement.HeightMin){
-                            continue;
-                        }
-                    }
+            //         //Not continuous Height
+            //         if(parentmeasurement.HeightCont == false && productmeasurement.HeightCont == false){
+            //             if(productmeasurement.HeightMin > parentmeasurement.HeightMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.HeightMin > parentmeasurement.HeightMin){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Both Width Continuous
-                    if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == true){
-                        if(productmeasurement.WidthMin >= parentmeasurement.WidthMin){
-                            continue;
-                        }
-                        if(productmeasurement.WidthMax >= parentmeasurement.WidthMax){
-                            continue;
-                        }
-                    }
+            //         //Both Width Continuous
+            //         if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == true){
+            //             if(productmeasurement.WidthMin >= parentmeasurement.WidthMin){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.WidthMax >= parentmeasurement.WidthMax){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Parent Width Continuous
-                    if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == false){
-                        if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
-                            continue;
-                        }
-                        if(productmeasurement.WidthMin > parentmeasurement.WidthMax){
-                            continue;
-                        }
-                    }
+            //         //Parent Width Continuous
+            //         if(parentmeasurement.WidthCont == true && productmeasurement.WidthCont == false){
+            //             if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.WidthMin > parentmeasurement.WidthMax){
+            //                 continue;
+            //             }
+            //         }
                 
-                    //Not continuous Width
-                    if(parentmeasurement.WidthCont == false && productmeasurement.WidthCont == false){
-                        if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
-                            continue;
-                        }
-                        if(productmeasurement.WidthMin > parentmeasurement.WidthMin){
-                            continue;
-                        }
-                    }
+            //         //Not continuous Width
+            //         if(parentmeasurement.WidthCont == false && productmeasurement.WidthCont == false){
+            //             if(productmeasurement.WidthMin > parentmeasurement.WidthMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.WidthMin > parentmeasurement.WidthMin){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Both Depth Continuous
-                    if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == true){
-                        if(productmeasurement.DepthMin >= parentmeasurement.DepthMin){
-                            continue;
-                        }
-                        if(productmeasurement.DepthMax >= parentmeasurement.DepthMax){
-                            continue;
-                        }
-                    }
+            //         //Both Depth Continuous
+            //         if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == true){
+            //             if(productmeasurement.DepthMin >= parentmeasurement.DepthMin){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.DepthMax >= parentmeasurement.DepthMax){
+            //                 continue;
+            //             }
+            //         }
 
-                    //Parent Depth Continuous
-                    if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == false){
-                        if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
-                            continue;
-                        }
-                        if(productmeasurement.DepthMin > parentmeasurement.DepthMax){
-                            continue;
-                        }
-                    }
+            //         //Parent Depth Continuous
+            //         if(parentmeasurement.DepthCont == true && productmeasurement.DepthCont == false){
+            //             if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.DepthMin > parentmeasurement.DepthMax){
+            //                 continue;
+            //             }
+            //         }
                 
-                    //Not continuous Depth
-                    if(parentmeasurement.DepthCont == false && productmeasurement.DepthCont == false){
-                        if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
-                            continue;
-                        }
-                        if(productmeasurement.DepthMin > parentmeasurement.DepthMin){
-                            continue;
-                        }
-                    }
-                    fit = true;
-                }
-            }
+            //         //Not continuous Depth
+            //         if(parentmeasurement.DepthCont == false && productmeasurement.DepthCont == false){
+            //             if(productmeasurement.DepthMin > parentmeasurement.DepthMin ){
+            //                 continue;
+            //             }
+            //             if(productmeasurement.DepthMin > parentmeasurement.DepthMin){
+            //                 continue;
+            //             }
+            //         }
+            //         fit = true;
+            //     }
+            // }
 
-            if(fit == false){
-                return BadRequest("Not a single subproduct fits product");
-            }
+            // if(fit == false){
+            //     return BadRequest("Not a single subproduct fits product");
+            // }
 
             product.ParentProductId = id;
             product.ParentProduct = parentproduct;
