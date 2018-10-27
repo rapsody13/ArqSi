@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ClosetApi.Models;
+using ClosetApi.DTO;
 
 
 namespace ClosetApi.Controllers
@@ -284,36 +285,73 @@ namespace ClosetApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAll(){
-            return _context.Products.ToList();
+        public ActionResult<List<ProductDTO>> GetAll(){
+            List<Product> products = _context.Products.ToList();
+            List<ProductDTO> dto = new List<ProductDTO>();
+
+            foreach(Product p in products){
+                dto.Add(new ProductDTO(){
+                    Name = p.Name,
+                    Description = p.Description,
+                    MaterialsId = p.MaterialsId,
+                    CategoryId = p.CategoryId,
+                    //ParentProductId = p.ParentProductId,
+                    MeasurementsId = p.MeasurementsId
+                });
+            }
+
+            return dto;
         }
 
         [HttpGet("{id:int}", Name = "GetProduct")]
-        public ActionResult<Product> GetById(int id)
+        public ActionResult<ProductDTO> GetById(int id)
         {
             var product = _context.Products.Find(id);
             if(product == null){
                 return NotFound();
             }
-            return product;
+
+            var dto = new ProductDTO(){
+                    Name = product.Name,
+                    Description = product.Description,
+                    MaterialsId = product.MaterialsId,
+                    CategoryId = product.CategoryId,
+                    //ParentProductId = p.ParentProductId,
+                    MeasurementsId = product.MeasurementsId
+            };
+            
+            return dto;
+            
         }
         
         [HttpGet("getbyname/{name}")]
-        public ActionResult<Product> GetByName(string name)
+        public ActionResult<ProductDTO> GetByName(string name)
         {
             Product product = _context.Products.Where(x=>x.Name.Equals(name)).FirstOrDefault();
             
             if(product == null){
                 return NotFound();
             }
-            return product;
+
+            var dto = new ProductDTO(){
+                    Name = product.Name,
+                    Description = product.Description,
+                    MaterialsId = product.MaterialsId,
+                    CategoryId = product.CategoryId,
+                    //ParentProductId = p.ParentProductId,
+                    MeasurementsId = product.MeasurementsId
+            };
+
+            return dto;
+            
         }
 
         [HttpGet("getsubproducts/{id}")]
-        public ActionResult<List<Product>> GetSubProducts(int id)
+        public ActionResult<List<ProductDTO>> GetSubProducts(int id)
         {
             Product product = _context.Products.Where(x=>x.ProductId.Equals(id)).FirstOrDefault();
-            
+            List<Product> products = new List<Product>();
+
             if(product == null){
                 return NotFound();
             }
@@ -321,25 +359,43 @@ namespace ClosetApi.Controllers
             if(product.Products == null){
                 return NotFound();
             }
-            return product.Products.ToList();
-        }
 
-        [HttpGet("getparentproducts/{id}")]
-        public ActionResult<List<Product>> GetParentProducts(int id)
-        {
-            Product product = _context.Products.Where(x=>x.ProductId.Equals(id)).FirstOrDefault();
+            foreach(int i in product.SubProducts){
+                products.Add(_context.Products.Find(i));
+            }
+
+            List<ProductDTO> dto = new List<ProductDTO>();
             
-            if(product == null){
-                return NotFound();
+            foreach(Product p in products){
+                dto.Add(new ProductDTO(){
+                    Name = p.Name,
+                    Description = p.Description,
+                    MaterialsId = p.MaterialsId,
+                    CategoryId = p.CategoryId,
+                    //ParentProductId = p.ParentProductId,
+                    MeasurementsId = p.MeasurementsId
+                });
             }
 
-            List<Product> subproductlist = _context.Products.Where(p=>p.ParentProduct.Equals(product)).ToList();
-
-            if(subproductlist == null){
-                return NotFound();
-            }
-            return subproductlist;
+            return dto;
         }
+
+    //     [HttpGet("getparentproducts/{id}")]
+    //     public ActionResult<List<Product>> GetParentProducts(int id)
+    //     {
+    //         Product product = _context.Products.Where(x=>x.ProductId.Equals(id)).FirstOrDefault();
+            
+    //         if(product == null){
+    //             return NotFound();
+    //         }
+
+    //         List<Product> subproductlist = _context.Products.Where(p=>p.ParentProduct.Equals(product)).ToList();
+
+    //         if(subproductlist == null){
+    //             return NotFound();
+    //         }
+    //         return subproductlist;
+    //     }
         
-    }
+     }
 }
