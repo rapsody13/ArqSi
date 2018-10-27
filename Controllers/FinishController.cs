@@ -77,18 +77,35 @@ namespace ClosetApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Finish>> GetAll(){
-            return _context.Finishes.ToList();
+        public ActionResult<List<FinishDTO>> GetAll(){
+            List<Finish> finishes =  _context.Finishes.ToList();
+            List<FinishDTO> dto = new List<FinishDTO>();
+        
+            foreach(Finish f in finishes){
+                dto.Add(new FinishDTO(){
+                    Name = f.Name,
+                    Description = f.Description,
+                    ParentMaterialId = f.ParentMaterialId
+                });
+            }
+            return dto;
         }
 
         [HttpGet("{id}", Name = "GetFinish")]
-        public ActionResult<Finish> GetById(int id)
+        public ActionResult<FinishDTO> GetById(int id)
         {
             var finish = _context.Finishes.Find(id);
             if(finish == null){
                 return NotFound();
             }
-            return finish;
+            
+            var dto = new FinishDTO {
+                Name = finish.Name,
+                Description = finish.Description,
+                ParentMaterialId = finish.ParentMaterialId
+            };
+
+            return dto;
         }
     }
 }
