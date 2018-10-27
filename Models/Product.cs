@@ -17,13 +17,12 @@ namespace ClosetApi.Models
         public List<int> MeasurementsId {get; set;}
 
         //Foreign Keys
-        public ICollection<Material> Materials {get; set;}
+        public virtual ICollection<ProductMaterial> ProductMaterials {get; set;}
         public Category Category {get; set;}
         public ICollection<Product> Products {get; set;}
         public Product ParentProduct {get; set;}
-        public ICollection<Measurement> Measurements {get; set;}
-        public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
-        public ICollection<ProductMaterial> ProductMaterials {get; set;}
+        public virtual ICollection<ProductMeasurement> ProductMeasurements {get; set;}
+
 
     }
 }

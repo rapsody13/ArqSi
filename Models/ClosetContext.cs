@@ -17,20 +17,7 @@ namespace ClosetApi.Models
     
        
        protected override void OnModelCreating(ModelBuilder modelBuilder){
-        //    modelBuilder.Entity<ProductMeasurement>()
-        //    .HasKey(pm => new {pm.ProductId, pm.MeasurementId});
-
-        //    modelBuilder.Entity<ProductMeasurement>()
-        //    .HasOne(pm => pm.Product)
-        //    .WithMany(p => p.ProductMeasurements)
-        //    .HasForeignKey(pm => pm.ProductId);
-
-        //     modelBuilder.Entity<ProductMeasurement>()
-        //    .HasOne(pm => pm.Measurement)
-        //    .WithMany(m => m.ProductMeasurements)
-        //    .HasForeignKey(pm => pm.MeasurementId);
-
-           modelBuilder.Entity<ProductMaterial>()
+          modelBuilder.Entity<ProductMaterial>()
            .HasKey(prma => new {prma.ProductId, prma.MaterialId});
 
            modelBuilder.Entity<ProductMaterial>()
@@ -42,6 +29,20 @@ namespace ClosetApi.Models
            .HasOne(prma => prma.Material)
            .WithMany(ma => ma.ProductMaterials)
            .HasForeignKey(prma => prma.MaterialId);
+        
+            modelBuilder.Entity<ProductMeasurement>()
+           .HasKey(pm => new {pm.ProductId, pm.MeasurementId});
+
+           modelBuilder.Entity<ProductMeasurement>()
+           .HasOne(pm => pm.Product)
+           .WithMany(p => p.ProductMeasurements)
+           .HasForeignKey(pm => pm.ProductId);
+
+            modelBuilder.Entity<ProductMeasurement>()
+           .HasOne(pm => pm.Measurement)
+           .WithMany(m => m.ProductMeasurements)
+           .HasForeignKey(pm => pm.MeasurementId);
+
        }
 
     }

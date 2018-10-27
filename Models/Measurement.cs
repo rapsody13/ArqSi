@@ -18,6 +18,9 @@ namespace ClosetApi.Models
         public bool DepthCont {get; set;}
         [NotMapped]
         public List<int> ProductsId {get; set;}
-        public ICollection<ProductMeasurement> ProductMeasurements {get; set;}
+        
+        //Foreign Key
+        public virtual ICollection<ProductMeasurement> ProductMeasurements {get; set;}
+        
     }
 }

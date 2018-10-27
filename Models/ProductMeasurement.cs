@@ -1,12 +1,11 @@
-namespace ClosetApi.Models
-{
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ClosetApi.Models {
     public class ProductMeasurement {
-
-        public int ProductMeasurementId {get; set;}
         public int ProductId {get; set;}
-        public Product Product {get; set;}
         public int MeasurementId {get; set;}
-        public Measurement Measurement {get; set;}
-
+        public virtual Product Product {get; set;}
+        public virtual Measurement Measurement {get; set;}
     }
 }

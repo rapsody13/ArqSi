@@ -12,7 +12,7 @@ namespace ClosetApi.Models
         public List<int> FinishesId {get; set;}
         //public Product Product {get; set;}
         public ICollection<Finish> Finishes {get; set;}
-        public ICollection<ProductMaterial> ProductMaterials {get; set;}
+        public virtual ICollection<ProductMaterial> ProductMaterials {get; set;}
 
     }
 }
