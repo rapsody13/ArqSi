@@ -6,6 +6,7 @@ namespace ClosetApi.DTO
     {
         public string Name {get; set;}
         public string Description {get; set;}
-        public ICollection<Finish> Finishes {get; set;}
+        public List<int> FinishesId {get; set;}
+
     }  
 }

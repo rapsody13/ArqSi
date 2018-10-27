@@ -11,6 +11,6 @@ namespace ClosetApi.DTO
         public double WidthMax {get; set;}
         public double DepthMin {get; set;}
         public double DepthMax {get; set;}
-        public ICollection<Product> Products {get; set;}
+        public List<int> ProductsId {get; set;}
     }  
 }

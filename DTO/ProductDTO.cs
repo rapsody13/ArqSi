@@ -7,9 +7,10 @@ namespace ClosetApi.DTO
     {
         public string Name {get; set;}
         public string Description {get; set;}
-        public ICollection<Material> Materials {get; set;}
-        public Category Category {get; set;}
-        public ICollection<Product> Products {get; set;}
-        public Measurement Measurement {get; set;}
+        public int CategoryId {get; set;}
+        public List<int> MaterialsId {get; set;}
+        public List<int> ProductsId {get; set;}
+        public List<int> MeasurementsId {get; set;}
+
     }  
 }

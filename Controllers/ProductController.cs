@@ -28,50 +28,50 @@ namespace ClosetApi.Controllers
         [HttpPost]
         public IActionResult Create(Product product){
 
-            //Check if the product has a material
-            if(product.MaterialsId == null){
-                return BadRequest("The product needs, at least, one material");
-            }
+            // //Check if the product has a material
+            // if(product.MaterialsId == null){
+            //     return BadRequest("The product needs, at least, one material");
+            // }
 
-            //Check if the product is part of a category
-            if(product.CategoryId == 0){
-                return BadRequest("The product must be part of a category");
-            }
+            // //Check if the product is part of a category
+            // if(product.CategoryId == 0){
+            //     return BadRequest("The product must be part of a category");
+            // }
 
-            //Check if the product does not have a subproduct when created
-            if(product.ParentProductId != 0){
-                return BadRequest("The product must not have a subproduct when it is created");
-            }
+            // //Check if the product does not have a subproduct when created
+            // if(product.ParentProductId != 0){
+            //     return BadRequest("The product must not have a subproduct when it is created");
+            // }
 
-            //Check if the product has measurements when created
-            if(product.MeasurementsId == null){
-                return BadRequest ("The product must have a measurement");
-            }
+            // //Check if the product has measurements when created
+            // if(product.MeasurementsId == null){
+            //     return BadRequest ("The product must have a measurement");
+            // }
 
-            //Check if the materials exists
-            foreach(int i in product.MaterialsId){
-                if(_context.Materials.Find(i) == null){
-                    return BadRequest("The material with Id " + i + " does not exist");
-                }
-                // else{
-                //     product.Materials.Add(_context.Materials.Find(i));
-                // }
-            }
+            // //Check if the materials exists
+            // foreach(int i in product.MaterialsId){
+            //     if(_context.Materials.Find(i) == null){
+            //         return BadRequest("The material with Id " + i + " does not exist");
+            //     }
+            //     // else{
+            //     //     product.Materials.Add(_context.Materials.Find(i));
+            //     // }
+            // }
 
-            //Check if the category exists
-                if(_context.Categories.Find(product.CategoryId) == null){
-                    return BadRequest("The category with Id " + product.CategoryId + " does not exist");
-                }
-                // else{
-                //     product.Category = _context.Categories.Find(product.CategoryId);
-                // }
+            // //Check if the category exists
+            //     if(_context.Categories.Find(product.CategoryId) == null){
+            //         return BadRequest("The category with Id " + product.CategoryId + " does not exist");
+            //     }
+            //     // else{
+            //     //     product.Category = _context.Categories.Find(product.CategoryId);
+            //     // }
             
-            //Check if the measurements exists
-                foreach(int i in product.MeasurementsId){
-                    if(_context.Measurements.Find(i) == null){
-                        return BadRequest("The measurement with Id " + i + " does not exist");
-                    }
-                }
+            // //Check if the measurements exists
+            //     foreach(int i in product.MeasurementsId){
+            //         if(_context.Measurements.Find(i) == null){
+            //             return BadRequest("The measurement with Id " + i + " does not exist");
+            //         }
+            //     }
 
             _context.Products.Add(product);
             _context.SaveChanges();
