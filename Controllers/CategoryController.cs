@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ClosetApi.Models;
+using ClosetApi.DTO;
 
 namespace ClosetApi.Controllers
 {
@@ -87,40 +88,81 @@ namespace ClosetApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Category>> GetAll(){
-            return _context.Categories.ToList();
+        public ActionResult<List<CategoryDTO>> GetAll(){
+            List<Category> categories =  _context.Categories.ToList();
+            List<CategoryDTO> dto = new List<CategoryDTO>();
+        
+            foreach(Category c in categories){
+                dto.Add(new CategoryDTO(){
+                    Name = c.Name,
+                    Description = c.Description,
+                     ParentCategoryId = c.ParentId,
+                    ProductsId = c.ProductsId,
+                });
+            }
+
+            return dto;
         }
 
         [HttpGet("getbyname/{name}")]
-        public ActionResult<Category> GetByName(string name)
+        public ActionResult<CategoryDTO> GetByName(string name)
         {
             Category category = _context.Categories.Where(c=>c.Name.Equals(name)).FirstOrDefault();
-            
+
             if(category == null){
                 return NotFound();
             }
-            return category;
+
+            var dto = new CategoryDTO(){
+                Name = category.Name,
+                Description = category.Description,
+                ParentCategoryId = category.ParentId,
+                ProductsId = category.ProductsId,
+            };
+            
+            return dto;
         }
 
         [HttpGet("getsubcategories/{id}")]
-        public ActionResult<List<Category>> GetSubCategories(int id)
+        public ActionResult<List<CategoryDTO>> GetSubCategories(int id)
         {
             List<Category> subcategories = _context.Categories.Where(c=>c.CategoryId.Equals(id)).ToList();
             
             if(subcategories == null){
                 return NotFound();
             }
-            return subcategories;
+
+            List<CategoryDTO> dto = new List<CategoryDTO>();
+        
+            foreach(Category c in subcategories){
+                dto.Add(new CategoryDTO(){
+                    Name = c.Name,
+                    Description = c.Description,
+                     ParentCategoryId = c.ParentId,
+                    ProductsId = c.ProductsId,
+                });
+            }
+
+            return dto;
         }
 
         [HttpGet("{id}", Name = "GetCategory")]
-        public ActionResult<Category> GetById(int id)
+        public ActionResult<CategoryDTO> GetById(int id)
         {
             var category = _context.Categories.Find(id);
-            if(category == null){
+
+             if(category == null){
                 return NotFound();
             }
-            return category;
+
+            var dto = new CategoryDTO {
+                Name = category.Name,
+                Description = category.Description,
+                ParentCategoryId = category.ParentId,
+                ProductsId = category.ProductsId,
+            };
+
+            return dto;
         }
     }
 }
