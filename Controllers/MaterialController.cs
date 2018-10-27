@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosetApi.Models;
 using Microsoft.EntityFrameworkCore;
+using ClosetApi.DTO;
 
 namespace ClosetApi.Controllers
 {
@@ -96,19 +97,38 @@ namespace ClosetApi.Controllers
         } 
 
         [HttpGet]
-        public ActionResult<List<Material>> GetAll(){
+        public ActionResult<List<MaterialDTO>> GetAll(){
             
-            return _context.Materials.Include(x=>x.Finishes).ToList();
+            List<Material> materials = _context.Materials.ToList();
+
+             List<MaterialDTO> dto = new List<MaterialDTO>();
+        
+            foreach(Material m in materials){
+                dto.Add(new MaterialDTO(){
+                    Name = m.Name,
+                    Description = m.Description,
+                    FinishesId = m.FinishesId,
+                });
+            }
+
+            return dto;
         }
 
         [HttpGet("{id}", Name = "GetMaterial")]
-        public ActionResult<Material> GetById(int id)
+        public ActionResult<MaterialDTO> GetById(int id)
         {
             var material = _context.Materials.Find(id);
             if(material == null){
                 return NotFound();
             }
-            return material;
+            var dto = new MaterialDTO {
+                Name = material.Name,
+                Description = material.Description,
+                FinishesId = material.FinishesId
+            };
+
+            return dto;
+
         }
     }
 }
