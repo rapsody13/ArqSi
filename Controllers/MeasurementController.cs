@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ClosetApi.Models;
+using ClosetApi.DTO;
 namespace ClosetApi.Controllers{
 
     [Route("api/measurement")]
@@ -83,18 +84,49 @@ namespace ClosetApi.Controllers{
 
 
         [HttpGet]
-        public ActionResult<List<Measurement>> GetAll(){
-            return _context.Measurements.ToList();
+        public ActionResult<List<MeasurementDTO>> GetAll(){
+            List<Measurement> measurements = _context.Measurements.ToList();
+
+            List<MeasurementDTO> dto = new List<MeasurementDTO>();
+            foreach(Measurement m in measurements){
+                dto.Add(new MeasurementDTO(){
+                    HeightMin = m.HeightMin,
+                    HeightMax = m.HeightMax,
+                    
+                    WidthMin= m.WidthMin,
+                    WidthMax=m.WidthMax,
+
+                    DepthMin = m.DepthMin,
+                    DepthMax = m.DepthMax,
+                    ProductsId = m.ProductsId,
+                });
+            }
+
+            return dto;
         }
 
         [HttpGet("{id:int}", Name = "GetMeasurement")]
-        public ActionResult<Measurement> GetById(int id)
+        public ActionResult<MeasurementDTO> GetById(int id)
         {
             var measurement = _context.Measurements.Find(id);
             if(measurement == null){
                 return NotFound();
             }
-            return measurement;
+
+        var dto = new MeasurementDTO(){
+                    HeightMin = measurement.HeightMin,
+                    HeightMax = measurement.HeightMax,
+                    
+                    WidthMin= measurement.WidthMin,
+                    WidthMax=measurement.WidthMax,
+
+                    DepthMin = measurement.DepthMin,
+                    DepthMax = measurement.DepthMax,
+                    ProductsId = measurement.ProductsId,
+            };
+            
+            return dto;
+
         }
 
         //Update a measurement by Id
