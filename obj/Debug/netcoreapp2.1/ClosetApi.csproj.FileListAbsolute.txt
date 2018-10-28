@@ -40,3 +40,17 @@ C:\Users\Jorge Carvalho\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi
 C:\Users\Jorge Carvalho\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.RazorTargetAssemblyInfo.cache
 C:\Users\Jorge Carvalho\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.dll
 C:\Users\Jorge Carvalho\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.pdb
+C:\Users\Claudia\Documents\GitHub\ArqSi\bin\Debug\netcoreapp2.1\ClosetApi.deps.json
+C:\Users\Claudia\Documents\GitHub\ArqSi\bin\Debug\netcoreapp2.1\ClosetApi.runtimeconfig.json
+C:\Users\Claudia\Documents\GitHub\ArqSi\bin\Debug\netcoreapp2.1\ClosetApi.runtimeconfig.dev.json
+C:\Users\Claudia\Documents\GitHub\ArqSi\bin\Debug\netcoreapp2.1\ClosetApi.dll
+C:\Users\Claudia\Documents\GitHub\ArqSi\bin\Debug\netcoreapp2.1\ClosetApi.pdb
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.csprojAssemblyReference.cache
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.csproj.CoreCompileInputs.cache
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.RazorAssemblyInfo.cache
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.RazorAssemblyInfo.cs
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.AssemblyInfoInputs.cache
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.AssemblyInfo.cs
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.RazorTargetAssemblyInfo.cache
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.dll
+C:\Users\Claudia\Documents\GitHub\ArqSi\obj\Debug\netcoreapp2.1\ClosetApi.pdb

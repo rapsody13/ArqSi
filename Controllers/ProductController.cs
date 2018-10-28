@@ -361,7 +361,7 @@ namespace ClosetApi.Controllers
             }
 
             foreach(int i in product.SubProducts){
-                products.Add(_context.Products.Find(i));
+               products.Add(_context.Products.Find(i));
             }
 
             List<ProductDTO> dto = new List<ProductDTO>();

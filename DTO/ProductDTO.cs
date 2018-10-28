@@ -10,6 +10,8 @@ namespace ClosetApi.DTO
         public int CategoryId {get; set;}
         public List<int> MaterialsId {get; set;}
         public List<int> ProductsId {get; set;}
+        // falta isto
+        public List<int> SubProducts {get; set;}
         public List<int> MeasurementsId {get; set;}
 
     }  
